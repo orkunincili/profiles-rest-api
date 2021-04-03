@@ -42,16 +42,16 @@ class UserProfileManager(BaseUserManager):
         return user
 
 
-        def create_super_user(self, email, password):
-            """Create and save a new super user with given details"""
+    def create_superuser(self, email, name, password):
+        """Create and save a new super user with given details"""
 
-            user = self.create_user(email, name ,password)
+        user = self.create_user(email, name, password)
 
-            user.is_superuser = True #created by the PermissionMixin
-            user.is_staff = True
-            user.save(using=self._db)
+        user.is_superuser = True #created by the PermissionMixin
+        user.is_staff = True
+        user.save(using=self._db)
 
-            return user
+        return user
 
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
