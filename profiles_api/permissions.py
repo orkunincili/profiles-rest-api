@@ -23,3 +23,9 @@ class UpdateOwnStatus(permissions.BasePermission):
             return True
 
         return obj.user_profile.id == request.user.id
+
+class IsSuperUser(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        """Check user is super user"""
+        return request.user and request.user.is_superuser

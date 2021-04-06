@@ -29,6 +29,21 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return user
 
 
+    def validate_email(self, value):
+        """Validate and return email."""
+        ret = models.UserProfile.objects.normalize_email(value)
+
+        return ret
+
+    def update(self, instance, validated_data):
+        """Handle updating user account"""
+        if 'password' in validated_data:
+            password = validated_data.pop('password')
+            instance.set_password(password)
+
+        return super().update(instance, validated_data)
+
+
 class ProfileFeedItemSerializer(serializers.ModelSerializer):
     """Serializes profile feed items"""
 

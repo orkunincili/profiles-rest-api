@@ -24,6 +24,13 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'email',)
 
+    def get_permissions(self):
+        if self.action == 'list':
+            self.permission_classes = (permissions.IsSuperUser,)
+        else:
+            self.permission_classes = (permissions.UpdateOwnProfile,)
+
+        return super(self.__class__, self).get_permissions()
 
 class UserLoginApiView(ObtainAuthToken):
     """Handle creating user authentication tokens"""
