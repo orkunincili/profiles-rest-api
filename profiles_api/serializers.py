@@ -29,6 +29,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return user
 
 
+
     def validate_email(self, value):
         """Validate and return email."""
         ret = models.UserProfile.objects.normalize_email(value)
